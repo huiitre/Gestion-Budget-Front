@@ -1,6 +1,5 @@
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import '../styles/index.scss';
 import { destroySession, setLoginFormErrMessage } from '../../../store/actions/user';
 
 const Navigation = () => {
@@ -45,12 +44,12 @@ const Navigation = () => {
             >
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
-                  <NavLink to="/app" className="nav-link">
+                  <NavLink to="/" className="nav-link">
                     Accueil
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink to="/app/transactions" className="nav-link">
+                  <NavLink to="/transactions" className="nav-link">
                     Transactions
                   </NavLink>
                 </li>

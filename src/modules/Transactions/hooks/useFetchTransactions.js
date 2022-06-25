@@ -1,10 +1,12 @@
 import { useQuery } from 'react-query';
 import axios from 'axios';
+import { transactionsQueryKeys } from '../../common/utils/keys-constants';
 
-const useFetchTransactions = () => useQuery(
-  'transaction',
+const useFetchTransactions = (key, limit = 0) => useQuery(
+  transactionsQueryKeys[key](limit),
   async () => {
-    const url = 'http://localhost:8080/api/transaction/list/month';
+    const limitStr = limit > 0 ? `?limit=${limit}` : '';
+    const url = `http://localhost:8080/api/transaction/list/month${limitStr}`;
     const token = localStorage.getItem('TOKEN');
     const axiosInstance = axios.create({
       withCredentials: true,

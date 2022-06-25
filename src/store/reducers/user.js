@@ -1,4 +1,6 @@
-import { DESTROY_SESSION, INSERT_USER_TO_STORE, SET_LOGIN_FORM_ERR_MESSAGE } from '../actions/user';
+import {
+  CHANGE_IS_LOADING_LOGIN_FORM, DESTROY_SESSION, INSERT_USER_TO_STORE, SET_LOGIN_FORM_ERR_MESSAGE,
+} from '../actions/user';
 
 export const initialState = {
   currentUser: {
@@ -8,7 +10,9 @@ export const initialState = {
   },
   loginForm: {
     errMessage: '',
+    isLoading: false,
   },
+  currentLocation: '',
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -42,6 +46,15 @@ const reducer = (state = initialState, action = {}) => {
         loginForm: {
           ...state.loginForm,
           errMessage: action.errMessage,
+        },
+      };
+    }
+    case CHANGE_IS_LOADING_LOGIN_FORM: {
+      return {
+        ...state,
+        loginForm: {
+          ...state.loginForm,
+          isLoading: action.bool,
         },
       };
     }

@@ -1,10 +1,11 @@
+/* eslint-disable spaced-comment */
 import {
-  BrowserRouter,
   Route,
   Routes as RouterRoutes,
   Navigate,
+  useLocation,
+  useNavigate,
 } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import Err404 from 'src/modules/Errors/components/err404';
 import Login from 'src/modules/Login/components/login';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,18 +14,15 @@ import Home from './modules/Home/components/home';
 import Navigation from './modules/Navigation/components/navigation';
 import Transactions from './modules/Transactions/components/transactions';
 import { destroySession, loadUser } from './store/actions/user';
+import Spinner from './modules/common/components/spinner';
+import TransactionAddPage from './pages/transactionAddPage';
 
 const Routes = () => {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 60000 * 24,
-        refetchOnWindowFocus: false,
-      },
-    },
-  });
-
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { isLogged } = useSelector((state) => state.user.currentUser);
+  const { isLoading } = useSelector((state) => state.user.loginForm);
 
   useEffect(() => {
     if (localStorage.getItem('TOKEN') != null) {
@@ -33,43 +31,40 @@ const Routes = () => {
     else {
       dispatch(destroySession());
     }
+    console.log(location);
   }, []);
 
-  const { isLogged } = useSelector((state) => state.user.currentUser);
+  //? possible de mettre ça dans le premier useEffect
+  useEffect(() => {
+    const loc = location.pathname === '/login' ? '/' : location.pathname;
+    navigate(loc);
+  }, [isLogged]);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Navigation />
+    <>
+      <Navigation />
+      {!isLoading ? (
         <RouterRoutes>
           {isLogged && (
-          <Route path="app">
-            <Route
-              path=""
-              element={<Home />}
-            />
-            ,
-            <Route
-              path="transactions"
-              element={<Transactions />}
-            />
-          </Route>
+            <>
+              <Route path="/" element={<Home />} />
+              ,
+              <Route path="transactions" element={<Transactions />} />
+              <Route path="transaction/add" element={<TransactionAddPage />} />
+            </>
           )}
-
-          <Route path="/">
-            <Route path="" element={<Navigate to="/login" />} />
-            <Route
-              path="login"
-              element={isLogged ? <Navigate to="/app" /> : <Login />}
-            />
-            <Route
-              path="*"
-              element={isLogged ? <Err404 /> : <Navigate to="/login" />}
-            />
-          </Route>
+          {!isLogged && (
+            <>
+              <Route path="*" element={<Navigate to="/login" />} />
+              <Route path="login" element={<Login />} />
+            </>
+          )}
+          <Route path="*" element={<Err404 />} />
         </RouterRoutes>
-      </BrowserRouter>
-    </QueryClientProvider>
+      ) : (
+        <Spinner />
+      )}
+    </>
   );
 };
 

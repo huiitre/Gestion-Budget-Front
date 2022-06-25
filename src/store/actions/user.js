@@ -37,3 +37,19 @@ export const setLoginFormErrMessage = (errMessage) => ({
   type: SET_LOGIN_FORM_ERR_MESSAGE,
   errMessage,
 });
+
+//* ACTION TYPE CHANGE_IS_LOADING_LOGIN_FORM
+export const CHANGE_IS_LOADING_LOGIN_FORM = 'CHANGE_IS_LOADING_LOGIN_FORM';
+//* ACTION CREATOR changeIsLoadingLoginForm
+export const changeIsLoadingLoginForm = (bool) => ({
+  type: CHANGE_IS_LOADING_LOGIN_FORM,
+  bool,
+});
+
+//* ACTION TYPE GET_LOCATION
+export const GET_LOCATION = 'GET_LOCATION';
+//* ACTION CREATOR getLocation
+export const getLocation = (loc) => ({
+  type: GET_LOCATION,
+  loc,
+});

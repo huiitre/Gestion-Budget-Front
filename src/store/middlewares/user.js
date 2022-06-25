@@ -3,6 +3,7 @@ import axios from 'axios';
 
 //* import des actions
 import {
+  changeIsLoadingLoginForm,
   destroySession,
   insertUserToStore, LOAD_USER, LOGIN, setLoginFormErrMessage,
 } from '../actions/user';
@@ -29,6 +30,8 @@ const token = localStorage.getItem('TOKEN');
 const userMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case LOGIN: {
+      store.dispatch(changeIsLoadingLoginForm(true));
+
       //* récupération du mail et mdp de l'utilisateur
       const { mail, password } = action;
 
@@ -45,23 +48,29 @@ const userMiddleware = (store) => (next) => (action) => {
         })
         .catch((e) => {
           store.dispatch(setLoginFormErrMessage(e.response.data.message));
+        })
+        .finally(() => {
+          store.dispatch(changeIsLoadingLoginForm(false));
         });
     }
       next(action);
       break;
 
     case LOAD_USER: {
+      store.dispatch(changeIsLoadingLoginForm(true));
       axiosInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
       axiosInstance
         .get('/user/profile')
         .then((res) => {
-          console.log(res.data);
           store.dispatch(insertUserToStore(res.data));
         })
         .catch(() => {
           localStorage.clear();
           //* on vient mettre isLogged à false
           store.dispatch(destroySession());
+        })
+        .finally(() => {
+          store.dispatch(changeIsLoadingLoginForm(false));
         });
     }
       next(action);
