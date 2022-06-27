@@ -1,12 +1,18 @@
-import { useQuery } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 import axios from 'axios';
 import { transactionsQueryKeys } from '../../common/utils/keys-constants';
 
-const useFetchTransactions = (key, limit = 0) => useQuery(
-  transactionsQueryKeys[key](limit),
-  async () => {
-    const limitStr = limit > 0 ? `?limit=${limit}` : '';
-    const url = `http://localhost:8080/api/transaction/list/month${limitStr}`;
+const useFetchTransactions = (key, limit) => useInfiniteQuery(
+  transactionsQueryKeys[key](),
+  async ({ pageParam, hasNextPage }) => {
+    let url = '';
+    if (limit) {
+      url = pageParam === undefined ? `http://localhost:8080/api/transaction/list/month?limit=${limit}&offset=${0}` : pageParam;
+    }
+    else {
+      url = 'http://localhost:8080/api/transaction/list/month';
+    }
+
     const token = localStorage.getItem('TOKEN');
     const axiosInstance = axios.create({
       withCredentials: true,
@@ -17,15 +23,15 @@ const useFetchTransactions = (key, limit = 0) => useQuery(
 
     return response.data;
   },
+  {
+    getNextPageParam: (lastPage, pages) => {
+      console.log('last page : ', lastPage.next);
+      if (!lastPage.next === null) {
+        return null;
+      }
+      return lastPage.next;
+    },
+  },
 );
-
-/* const useFetchTransactions = () => {
-  const url = 'http://localhost:8080/api/transaction/list/month';
-
-  axios.get(url)
-    .then((response) => {
-
-    });
-}; */
 
 export default useFetchTransactions;

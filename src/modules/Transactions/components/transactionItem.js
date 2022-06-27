@@ -1,3 +1,5 @@
+import Checkbox from '@mui/material/Checkbox';
+
 const TransactionItem = ({
   t_id,
   t_name,
@@ -6,10 +8,23 @@ const TransactionItem = ({
   c_name,
   s_name,
   t_created_at,
+  onSelected,
+  transactionsList,
 }) => {
   const date = new Date(t_created_at);
+
+  const handleSelected = (e) => {
+    if (e.target.checked) {
+      onSelected([...transactionsList, t_id]);
+    }
+    else {
+      onSelected(transactionsList.filter((id) => id !== t_id));
+    }
+  };
+
   return (
     <tr>
+      <th scope="row"><Checkbox onChange={handleSelected} /></th>
       <th scope="row">{t_id}</th>
       <td>{t_name}</td>
       <td>{t_wording}</td>
@@ -25,7 +40,7 @@ const TransactionItem = ({
           <i className="fa fa-pencil-square-o" aria-hidden="true" />
         </a>
 
-        <div className="btn-group">
+        {/* <div className="btn-group">
           <button
             type="button"
             className="btn btn-sm btn-danger dropdown-toggle"
@@ -38,7 +53,7 @@ const TransactionItem = ({
           <div className="dropdown-menu">
             <a
               className="dropdown-item"
-              href="<?= $router->generate('product-delete', ['id' => $value->getId()]) ?>?token=<?= $token ?>"
+              href=""
             >
               Oui, je veux supprimer
             </a>
@@ -46,7 +61,7 @@ const TransactionItem = ({
               Oups !
             </a>
           </div>
-        </div>
+        </div> */}
       </td>
     </tr>
   );

@@ -35,7 +35,18 @@
     "func-names": "off",
     "object-shorthand": "off",
     "react/jsx-uses-react": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "spaced-comment": ["error", "always", {
+      "line": {
+          "markers": ["/"],
+          "exceptions": ["-", "+", "todo"]
+      },
+      "block": {
+          "markers": ["!"],
+          "exceptions": ["*", "todo"],
+          "balanced": true
+      }
+  }]
   },
   "settings": {
     "import/resolver": {

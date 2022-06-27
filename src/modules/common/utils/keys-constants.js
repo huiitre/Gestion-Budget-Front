@@ -3,7 +3,9 @@
 export const transactionsQueryKeys = {
   base: ['transactions'],
   list: () => [...transactionsQueryKeys.base, 'list'],
-  limit: (val) => [...transactionsQueryKeys.base, `limit-${val}`],
+  limit: () => [...transactionsQueryKeys.base, 'limit'],
+  create: () => [...transactionsQueryKeys.base, 'create'],
+  delete: () => [...transactionsQueryKeys.base, 'delete'],
 };
 
 export const categoriesQueryKeys = {

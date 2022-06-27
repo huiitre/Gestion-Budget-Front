@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 // == Import
+import { useCallback } from 'react';
 import useFetchTransactions from '../../Transactions/hooks/useFetchTransactions';
 import getMonthNameFromDate from '../../common/utils/getMonthNameFromDate';
 import getYearIntegetFromDate from '../../common/utils/getYearIntegerFromDate';
@@ -11,7 +12,19 @@ const Home = () => {
   const currentMonth = getMonthNameFromDate();
   const currentYear = getYearIntegetFromDate();
 
-  const { data, isLoading } = useFetchTransactions('limit', 5);
+  const {
+    data, isLoading, fetchNextPage, hasNextPage,
+  } = useFetchTransactions('limit', 5);
+
+  const handleFetchNextPage = useCallback(
+    (e) => {
+      e.preventDefault();
+      fetchNextPage();
+    },
+    [fetchNextPage],
+  );
+
+  // !isLoading && console.log('data : ', data);
   return (
     <>
       {!isLoading ? (
@@ -26,7 +39,9 @@ const Home = () => {
                     <span>
                       Solde du mois de {currentMonth} {currentYear}
                     </span>
-                    <span>{!isLoading && data.count.balance}</span>
+                    <span>
+                      {!isLoading && data.pages[0].total.total_balance}
+                    </span>
                   </div>
                   <div className="card-body">
                     <table className="table table-hover">
@@ -40,16 +55,25 @@ const Home = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {data.data.map((item) => (
+                        {/* {data.pages[0].data.map((item) => (
                           <TransactionShortItem {...item} key={item.t_id} />
-                        ))}
+                        ))} */}
+                        {data.pages.map((group, i) => group.data.map((item) => (
+                          <TransactionShortItem {...item} key={item.t_id} />
+                        )))}
                       </tbody>
                     </table>
-                    {/* <div className="d-grid gap-2">
-                  <a href="categories.html" className="btn btn-success">
-                    Voir plus
-                  </a>
-                </div> */}
+                    {hasNextPage && (
+                      <div className="d-grid gap-2">
+                        <a
+                          href=""
+                          className="btn btn-success"
+                          onClick={handleFetchNextPage}
+                        >
+                          Voir plus
+                        </a>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
