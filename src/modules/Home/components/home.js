@@ -14,7 +14,7 @@ const Home = () => {
 
   const {
     data, isLoading, fetchNextPage, hasNextPage,
-  } = useFetchTransactions('limit', 5);
+  } = useFetchTransactions('limit');
 
   const handleFetchNextPage = useCallback(
     (e) => {

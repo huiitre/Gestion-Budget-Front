@@ -2,16 +2,11 @@ import { useInfiniteQuery } from 'react-query';
 import axios from 'axios';
 import { transactionsQueryKeys } from '../../common/utils/keys-constants';
 
-const useFetchTransactions = (key, limit) => useInfiniteQuery(
+const useFetchTransactions = (key) => useInfiniteQuery(
   transactionsQueryKeys[key](),
   async ({ pageParam, hasNextPage }) => {
     let url = '';
-    if (limit) {
-      url = pageParam === undefined ? `http://localhost:8080/api/transaction/list/month?limit=${limit}&offset=${0}` : pageParam;
-    }
-    else {
-      url = 'http://localhost:8080/api/transaction/list/month';
-    }
+    url = 'http://localhost:8080/api/transaction/list/month';
 
     const token = localStorage.getItem('TOKEN');
     const axiosInstance = axios.create({
