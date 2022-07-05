@@ -5,14 +5,13 @@ import { subcategoriesQueryKeys } from '../../common/utils/keys-constants';
 const useFetchSubcategories = (key, val = null) => useQuery(
   subcategoriesQueryKeys[key](val),
   async () => {
-    const url = `http://localhost:8080/api/subcategory/list/${val}`;
     const token = localStorage.getItem('TOKEN');
     const axiosInstance = axios.create({
       withCredentials: true,
-      baseURL: url,
+      baseURL: `${process.env.REACT_APP_API_URL}/api`,
     });
     axiosInstance.defaults.headers.common.authorization = `Bearer ${token}`;
-    const response = await axiosInstance.get(url);
+    const response = await axiosInstance.get(`/subcategory/list/${val}`);
 
     return response.data;
   },

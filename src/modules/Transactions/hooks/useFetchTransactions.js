@@ -5,22 +5,18 @@ import { transactionsQueryKeys } from '../../common/utils/keys-constants';
 const useFetchTransactions = (key) => useInfiniteQuery(
   transactionsQueryKeys[key](),
   async ({ pageParam, hasNextPage }) => {
-    let url = '';
-    url = 'http://localhost:8080/api/transaction/list/month';
-
     const token = localStorage.getItem('TOKEN');
     const axiosInstance = axios.create({
       withCredentials: true,
-      baseURL: url,
+      baseURL: `${process.env.REACT_APP_API_URL}/api`,
     });
     axiosInstance.defaults.headers.common.authorization = `Bearer ${token}`;
-    const response = await axiosInstance.get(url);
+    const response = await axiosInstance.get('/transaction/list');
 
     return response.data;
   },
   {
     getNextPageParam: (lastPage, pages) => {
-      console.log('last page : ', lastPage.next);
       if (!lastPage.next === null) {
         return null;
       }

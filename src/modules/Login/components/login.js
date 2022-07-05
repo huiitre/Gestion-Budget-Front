@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login } from 'src/store/actions/user';
 
 const Login = () => {
+  console.log('env : ', process.env.NODE_ENV);
+  console.log('url : ', process.env.REACT_APP_API_URL);
   const dispatch = useDispatch();
   const { errMessage } = useSelector((state) => state.user.loginForm);
   console.log(errMessage);

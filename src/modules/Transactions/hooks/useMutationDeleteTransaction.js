@@ -9,14 +9,13 @@ const useMutationDeleteTransaction = (ids) => {
   return useMutation(
     transactionsQueryKeys.delete(),
     async () => {
-      const url = `http://localhost:8080/api/transaction/delete?id=${data}`;
       const token = localStorage.getItem('TOKEN');
       const axiosInstance = axios.create({
         withCredentials: true,
-        baseURL: url,
+        baseURL: `${process.env.REACT_APP_API_URL}/api`,
       });
       axiosInstance.defaults.headers.common.authorization = `Bearer ${token}`;
-      const response = await axiosInstance.delete(url);
+      const response = await axiosInstance.delete(`/transaction/delete?id=${data}`);
       return response;
     },
     {

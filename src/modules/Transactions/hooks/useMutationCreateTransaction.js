@@ -8,14 +8,13 @@ const useMutationCreateTransaction = (transaction) => {
   return useMutation(
     transactionsQueryKeys.create(),
     async () => {
-      const url = 'http://localhost:8080/api/transaction/create';
       const token = localStorage.getItem('TOKEN');
       const axiosInstance = axios.create({
         withCredentials: true,
-        baseURL: url,
+        baseURL: `${process.env.REACT_APP_API_URL}/api`,
       });
       axiosInstance.defaults.headers.common.authorization = `Bearer ${token}`;
-      const response = await axiosInstance.post(url, transaction);
+      const response = await axiosInstance.post('/transaction/create', transaction);
       return response;
     },
     {

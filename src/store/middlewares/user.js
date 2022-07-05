@@ -8,20 +8,10 @@ import {
   insertUserToStore, LOAD_USER, LOGIN, setLoginFormErrMessage,
 } from '../actions/user';
 
-//* déclaration de l'url dev ou prod
-let finalURL = '';
-if (process.env.NODE_ENV === 'development') {
-  finalURL = 'http://localhost:8080/api';
-}
-else {
-  finalURL = '';
-}
-console.log('Environnement : ', process.env.NODE_ENV);
-
 //* création de l'instance d'axios
 const axiosInstance = axios.create({
   withCredentials: true,
-  baseURL: finalURL,
+  baseURL: `${process.env.REACT_APP_API_URL}/api`,
 });
 
 //* récupération du jwt en LS
