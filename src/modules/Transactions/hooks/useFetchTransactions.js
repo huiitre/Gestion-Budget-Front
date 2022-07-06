@@ -7,7 +7,6 @@ const useFetchTransactions = (key) => useInfiniteQuery(
   async ({ pageParam, hasNextPage }) => {
     const token = localStorage.getItem('TOKEN');
     const axiosInstance = axios.create({
-      withCredentials: true,
       baseURL: `${process.env.REACT_APP_API_URL}`,
     });
     axiosInstance.defaults.headers.common.authorization = `Bearer ${token}`;
