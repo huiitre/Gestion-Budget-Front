@@ -16,6 +16,7 @@ import Transactions from './modules/Transactions/components/transactions';
 import { destroySession, loadUser } from './store/actions/user';
 import Spinner from './modules/common/components/spinner';
 import TransactionAddPage from './pages/transactionAddPage';
+import VehiculeHomePage from './pages/vehiculeHomePage';
 
 const Routes = () => {
   const dispatch = useDispatch();
@@ -51,6 +52,7 @@ const Routes = () => {
               ,
               <Route path="transactions" element={<Transactions />} />
               <Route path="transaction/add" element={<TransactionAddPage />} />
+              <Route path="vehicule" element={<VehiculeHomePage />} />
             </>
           )}
           {!isLogged && (

@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom';
 import useFetchCategories from '../../Categories/hooks/useFetchCategories';
 import useFetchSubcategories from '../../Categories/hooks/useFetchSubcategory';
 import InputForm from '../../common/components/form/input';
-import useFetchVehicle from '../../common/hooks/useFetchVehicle';
-import useFetchFuel from '../../common/hooks/useFetchFuel';
+import useFetchVehicle from '../../Vehicule/hooks/useFetchVehicle';
+import useFetchFuel from '../../Vehicule/hooks/useFetchFuel';
 import useMutationCreateTransaction from '../hooks/useMutationCreateTransaction';
 
 const TransactionAddForm = () => {

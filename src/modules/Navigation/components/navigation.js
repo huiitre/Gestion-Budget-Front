@@ -53,6 +53,11 @@ const Navigation = () => {
                     Transactions
                   </NavLink>
                 </li>
+                <li className="nav-item">
+                  <NavLink to="/vehicule" className="nav-link">
+                    Vehicule
+                  </NavLink>
+                </li>
               </ul>
             </div>
           </div>
