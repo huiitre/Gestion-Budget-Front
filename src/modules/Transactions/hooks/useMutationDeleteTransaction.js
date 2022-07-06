@@ -12,7 +12,7 @@ const useMutationDeleteTransaction = (ids) => {
       const token = localStorage.getItem('TOKEN');
       const axiosInstance = axios.create({
         withCredentials: true,
-        baseURL: `${process.env.REACT_APP_API_URL}/api`,
+        baseURL: `${process.env.REACT_APP_API_URL}`,
       });
       axiosInstance.defaults.headers.common.authorization = `Bearer ${token}`;
       const response = await axiosInstance.delete(`/transaction/delete?id=${data}`);

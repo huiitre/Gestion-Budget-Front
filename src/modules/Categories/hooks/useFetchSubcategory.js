@@ -8,7 +8,7 @@ const useFetchSubcategories = (key, val = null) => useQuery(
     const token = localStorage.getItem('TOKEN');
     const axiosInstance = axios.create({
       withCredentials: true,
-      baseURL: `${process.env.REACT_APP_API_URL}/api`,
+      baseURL: `${process.env.REACT_APP_API_URL}`,
     });
     axiosInstance.defaults.headers.common.authorization = `Bearer ${token}`;
     const response = await axiosInstance.get(`/subcategory/list/${val}`);

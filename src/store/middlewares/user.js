@@ -11,7 +11,7 @@ import {
 //* création de l'instance d'axios
 const axiosInstance = axios.create({
   withCredentials: true,
-  baseURL: `${process.env.REACT_APP_API_URL}/api`,
+  baseURL: `${process.env.REACT_APP_API_URL}`,
 });
 
 //* récupération du jwt en LS
