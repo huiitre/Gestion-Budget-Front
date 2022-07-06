@@ -17,3 +17,13 @@ export const subcategoriesQueryKeys = {
   base: ['subcategories'],
   findByCategory: (val) => [...subcategoriesQueryKeys.base, `findByCategory-${val}`],
 };
+
+export const vehiclesQueryKeys = {
+  base: ['vehicles'],
+  list: () => [...vehiclesQueryKeys.base, 'list'],
+};
+
+export const fuelQueryKeys = {
+  base: ['fuel'],
+  list: () => [...fuelQueryKeys.base, 'list'],
+};

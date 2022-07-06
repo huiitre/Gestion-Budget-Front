@@ -1,4 +1,5 @@
 /* eslint-disable arrow-body-style */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 
 import { LinearProgress } from '@mui/material';
 import { useState } from 'react';
@@ -6,33 +7,69 @@ import { Link } from 'react-router-dom';
 import useFetchCategories from '../../Categories/hooks/useFetchCategories';
 import useFetchSubcategories from '../../Categories/hooks/useFetchSubcategory';
 import InputForm from '../../common/components/form/input';
+import useFetchVehicle from '../../common/hooks/useFetchVehicle';
+import useFetchFuel from '../../common/hooks/useFetchFuel';
 import useMutationCreateTransaction from '../hooks/useMutationCreateTransaction';
 
-/* eslint-disable jsx-a11y/label-has-associated-control */
 const TransactionAddForm = () => {
-  const [category, setCategory] = useState(0);
-  const [subcategory, setSubcategory] = useState(0);
-  const [Name, setName] = useState('');
+  const [category, setCategory] = useState();
+  const [subcategory, setSubcategory] = useState();
+  const [name, setName] = useState('');
   const [wording, setWording] = useState('');
-  const [balance, setBalance] = useState(0);
+  const [balance, setBalance] = useState('');
 
+  //* si c'est un plein d'essence
+  const [kmTravelled, setKmTravelled] = useState('');
+  const [priceLiter, setPriceLiter] = useState('');
+  const [tank, setTank] = useState('');
+  const [fuel, setFuel] = useState(3);
+  const [vehicle, setVehicle] = useState(2);
+
+  //* on vient chercher les catégories et les sous catégories
   const { data: categoryData, isLoading: categoryIsLoading } = useFetchCategories('list');
   const { data: subcategoriesData, isLoading: subcategoriesIsLoading } = useFetchSubcategories('findByCategory', category);
 
-  const transaction = {
-    name: Name,
-    wording,
-    balance: parseFloat(balance),
-    subcategory,
-    is_fixed: true,
-    is_seen: true,
-    is_active: true,
-  };
+  //* les véhicules et les carburants
+  const { data: vehicleData, isLoading: vehicleIsLoading } = useFetchVehicle('list');
+  const { data: fuelData, isLoading: fuelIsLoading } = useFetchFuel('list');
+
+  let transaction = {};
+  if (subcategory == 40) {
+    transaction = {
+      name,
+      wording,
+      balance: parseFloat(balance),
+      subcategory,
+      is_fixed: true,
+      is_seen: true,
+      is_active: true,
+      tessence: {
+        km_travelled: parseFloat(kmTravelled),
+        price_liter: parseFloat(priceLiter),
+        tank: parseFloat(tank),
+        fuel: fuel,
+        vehicle: vehicle,
+      },
+    };
+  }
+  else {
+    transaction = {
+      name,
+      wording,
+      balance: parseFloat(balance),
+      subcategory,
+      is_fixed: true,
+      is_seen: true,
+      is_active: true,
+    };
+  }
+
   const mutation = useMutationCreateTransaction(transaction);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    mutation.mutate(transaction);
+    console.log(transaction);
+    mutation.mutate();
   };
 
   return (
@@ -54,7 +91,7 @@ const TransactionAddForm = () => {
               id="name"
               placeholder="Nom de la transaction"
               name="name"
-              value={Name}
+              value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
@@ -129,6 +166,87 @@ const TransactionAddForm = () => {
                 ))}
             </select>
           </div>
+          {subcategory == 40 && (
+            <>
+              <div className="mb-3">
+                <InputForm
+                  type="number"
+                  className="form-control"
+                  id="km_travelled"
+                  placeholder="Kilomètres parcouru"
+                  name="km_travelled"
+                  value={kmTravelled}
+                  onChange={(e) => setKmTravelled(e.target.value)}
+                />
+              </div>
+              <div className="mb-3">
+                <InputForm
+                  type="number"
+                  className="form-control"
+                  id="price_liter"
+                  placeholder="Prix au litre"
+                  name="price_liter"
+                  value={priceLiter}
+                  onChange={(e) => setPriceLiter(e.target.value)}
+                />
+              </div>
+              <div className="mb-3">
+                <InputForm
+                  type="number"
+                  className="form-control"
+                  id="tank"
+                  placeholder="Litres ajoutés"
+                  name="tank"
+                  value={tank}
+                  onChange={(e) => setTank(e.target.value)}
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="vehicle" className="form-label">
+                  Véhicule {vehicleIsLoading && <LinearProgress />}
+                </label>
+                <select
+                  className="form-select"
+                  name="vehicle"
+                  id="vehicle"
+                  onChange={(e) => {
+                    setVehicle(e.target.value);
+                  }}
+                  required
+                >
+                  <option value="0">-- Véhicule --</option>
+                  {!vehicleIsLoading
+                    && vehicleData.map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.id} - {item.name}
+                      </option>
+                    ))}
+                </select>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="vehicle" className="form-label">
+                  Carburant {fuelIsLoading && <LinearProgress />}
+                </label>
+                <select
+                  className="form-select"
+                  name="fuel"
+                  id="fuel"
+                  onChange={(e) => {
+                    setFuel(e.target.value);
+                  }}
+                  required
+                >
+                  <option value="0">-- Carburant --</option>
+                  {!fuelIsLoading
+                    && fuelData.map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.id} - {item.name}
+                      </option>
+                    ))}
+                </select>
+              </div>
+            </>
+          )}
           {mutation.isLoading && <LinearProgress />}
           {mutation.isError && (
             <div className="alert alert-danger p-4" role="alert">

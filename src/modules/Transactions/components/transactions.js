@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { DataGrid } from '@mui/x-data-grid';
-import Spinner from '../../common/components/spinner';
 import useFetchTransactions from '../hooks/useFetchTransactions';
 import useMutationDeleteTransaction from '../hooks/useMutationDeleteTransaction';
 import Popup from '../../common/components/popup';
@@ -28,20 +27,28 @@ const Transactions = () => {
 
   //TODO dynaminer les colonnes en fonction des data qui arrivent
   const columns = [
-    { field: 't_id', headerName: 'ID', width: 100 },
-    { field: 't_name', headerName: 'Nom', width: 100 },
-    { field: 't_wording', headerName: 'Libellé', width: 100 },
+    { field: 't_id', headerName: 'ID', width: 50 },
+    { field: 't_name', headerName: 'Nom', width: 250 },
+    { field: 't_wording', headerName: 'Libellé', width: 250 },
     { field: 't_balance', headerName: 'Montant', width: 100 },
-    { field: 't_created_at', headerName: 'Créé le', width: 100 },
-    { field: 't_status', headerName: 'Status', width: 100 },
-    { field: 't_slug', headerName: 'Slug', width: 100 },
-    { field: 'c_id', headerName: 'Catégorie - ID', width: 100 },
-    { field: 'c_name', headerName: 'Catégorie - Nom', width: 100 },
-    { field: 's_id', headerName: 'Sous-catégorie - ID', width: 100 },
-    { field: 's_name', headerName: 'Sous-catégorie - Nom', width: 100 },
+    { field: 't_created_at', headerName: 'Créé le', width: 250 },
+    {
+      field: 't_status',
+      headerName: 'Status',
+      width: 50,
+      valueFormatter: (params) => {
+        if (params.value == 1) {
+          return '✅';
+        }
+        return '❌';
+      },
+    },
+    { field: 't_slug', headerName: 'Slug', width: 250 },
+    { field: 'c_id', headerName: 'Catégorie - ID', width: 50 },
+    { field: 'c_name', headerName: 'Catégorie - Nom', width: 250 },
+    { field: 's_id', headerName: 'Sous-catégorie - ID', width: 50 },
+    { field: 's_name', headerName: 'Sous-catégorie - Nom', width: 250 },
   ];
-
-  console.log(data);
 
   return (
     <div className="container my-4">
