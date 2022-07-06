@@ -12,7 +12,7 @@ import useFetchFuel from '../../common/hooks/useFetchFuel';
 import useMutationCreateTransaction from '../hooks/useMutationCreateTransaction';
 
 const TransactionAddForm = () => {
-  const [category, setCategory] = useState();
+  const [category, setCategory] = useState(0);
   const [subcategory, setSubcategory] = useState();
   const [name, setName] = useState('');
   const [wording, setWording] = useState('');
@@ -22,8 +22,8 @@ const TransactionAddForm = () => {
   const [kmTravelled, setKmTravelled] = useState('');
   const [priceLiter, setPriceLiter] = useState('');
   const [tank, setTank] = useState('');
-  const [fuel, setFuel] = useState(3);
-  const [vehicle, setVehicle] = useState(2);
+  const [fuel, setFuel] = useState();
+  const [vehicle, setVehicle] = useState();
 
   //* on vient chercher les catégories et les sous catégories
   const { data: categoryData, isLoading: categoryIsLoading } = useFetchCategories('list');
@@ -263,6 +263,26 @@ const TransactionAddForm = () => {
           <div className="d-grid gap-2">
             <button type="submit" className="btn btn-primary mt-2">
               Valider
+            </button>
+          </div>
+          <div className="d-grid gap-2">
+            <button
+              type="button"
+              className="btn btn-warning mt-2"
+              onClick={() => {
+                setName('');
+                setWording('');
+                setBalance('');
+                setCategory(0);
+                setSubcategory();
+                setKmTravelled('');
+                setPriceLiter('');
+                setTank('');
+                setVehicle();
+                setFuel();
+              }}
+            >
+              Reset
             </button>
           </div>
         </form>
