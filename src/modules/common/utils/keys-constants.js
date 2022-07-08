@@ -6,6 +6,7 @@ export const transactionsQueryKeys = {
   limit: () => [...transactionsQueryKeys.base, 'limit'],
   create: () => [...transactionsQueryKeys.base, 'create'],
   delete: () => [...transactionsQueryKeys.base, 'delete'],
+  fuelList: () => [...transactionsQueryKeys.base, 'fuelList'],
 };
 
 export const categoriesQueryKeys = {
