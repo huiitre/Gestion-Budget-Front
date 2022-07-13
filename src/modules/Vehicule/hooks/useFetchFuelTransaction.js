@@ -8,7 +8,7 @@ const useFetchFuelTransaction = (key) => useQuery(transactionsQueryKeys[key](), 
     baseURL: `${process.env.REACT_APP_API_URL}`,
   });
   axiosInstance.defaults.headers.common.authorization = `Bearer ${token}`;
-  const response = await axiosInstance.get('/transaction/vehicle');
+  const response = await axiosInstance.get('/transaction/essence');
 
   return response.data;
 });

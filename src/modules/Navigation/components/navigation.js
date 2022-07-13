@@ -1,6 +1,11 @@
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { destroySession, setLoginFormErrMessage } from '../../../store/actions/user';
+import { useState } from 'react';
+import {
+  destroySession,
+  setLoginFormErrMessage,
+} from '../../../store/actions/user';
+import AddVehicle from '../../common/components/form/addVehicle';
 
 const Navigation = () => {
   const dispatch = useDispatch();
@@ -8,8 +13,20 @@ const Navigation = () => {
     (state) => state.user.currentUser,
   );
 
+  const [isOpenAddVehicle, setIsOpenAddVehicle] = useState(false);
+  const [isOpenAddFuel, setIsOpenAddFuel] = useState(false);
+
+  const handleOpenAddVehicle = () => {
+    setIsOpenAddVehicle(true);
+  };
+
+  const handleCloseAddVehicle = () => {
+    setIsOpenAddVehicle(false);
+  };
+
   return (
     <>
+      <AddVehicle isOpen={isOpenAddVehicle} close={handleCloseAddVehicle} />
       {isLogged && (
         <nav className="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
           <div className="container-fluid">
@@ -54,9 +71,62 @@ const Navigation = () => {
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink to="/vehicule" className="nav-link">
-                    Vehicule
-                  </NavLink>
+                  <div
+                    className="collapse navbar-collapse"
+                    id="navbarNavDarkDropdown"
+                  >
+                    <ul className="navbar-nav">
+                      <li className="nav-item dropdown">
+                        <a
+                          className="nav-link dropdown-toggle"
+                          href="#"
+                          id="navbarDarkDropdownMenuLink"
+                          role="button"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          Conso Essence
+                        </a>
+                        <ul
+                          className="dropdown-menu dropdown-menu-dark"
+                          aria-labelledby="navbarDarkDropdownMenuLink"
+                        >
+                          <li>
+                            <NavLink
+                              to="/vehicule"
+                              className="dropdown-item nav-link"
+                            >
+                              Liste
+                            </NavLink>
+                          </li>
+                          <li>
+                            <a
+                              href=""
+                              className="dropdown-item nav-link"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                handleOpenAddVehicle(true);
+                              }}
+                            >
+                              Ajouter / supprimer un véhicule
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              href=""
+                              className="dropdown-item nav-link"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                handleOpenAddVehicle(true);
+                              }}
+                            >
+                              Ajouter / supprimer un carburant
+                            </a>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
                 </li>
               </ul>
             </div>
