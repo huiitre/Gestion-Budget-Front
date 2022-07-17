@@ -10,6 +10,7 @@ const useFetchFuelTransaction = (key) => useQuery(transactionsQueryKeys[key](), 
   axiosInstance.defaults.headers.common.authorization = `Bearer ${token}`;
   const response = await axiosInstance.get('/transaction/essence');
 
+  console.log(response.data);
   return response.data;
 });
 

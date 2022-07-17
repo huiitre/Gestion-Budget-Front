@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
 import { LinearProgress } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useFetchCategories from '../../Categories/hooks/useFetchCategories';
 import useFetchSubcategories from '../../Categories/hooks/useFetchSubcategory';
@@ -12,7 +12,7 @@ import useFetchFuel from '../../Vehicule/hooks/useFetchFuel';
 import useMutationCreateTransaction from '../hooks/useMutationCreateTransaction';
 
 const TransactionAddForm = () => {
-  const [category, setCategory] = useState(0);
+  const [category, setCategory] = useState();
   const [subcategory, setSubcategory] = useState();
   const [name, setName] = useState('');
   const [wording, setWording] = useState('');
@@ -32,6 +32,16 @@ const TransactionAddForm = () => {
   //* les véhicules et les carburants
   const { data: vehicleData, isLoading: vehicleIsLoading } = useFetchVehicle('list');
   const { data: fuelData, isLoading: fuelIsLoading } = useFetchFuel('list');
+
+  const resetForm = () => {
+    setName('');
+    setWording('');
+    setBalance('');
+    setKmTravelled('');
+    setPriceLiter('');
+    setTank('');
+    setFuel();
+  };
 
   let transaction = {};
   if (subcategory == 40) {
@@ -68,9 +78,12 @@ const TransactionAddForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(transaction);
     mutation.mutate();
   };
+
+  useEffect(() => {
+    resetForm();
+  }, [mutation.isSuccess]);
 
   return (
     <>
@@ -218,7 +231,7 @@ const TransactionAddForm = () => {
                   {!vehicleIsLoading
                     && vehicleData.map((item) => (
                       <option key={item.id} value={item.id}>
-                        {item.id} - {item.name}
+                        {item.id} - {item.name} - {item.immat}
                       </option>
                     ))}
                 </select>
@@ -269,18 +282,7 @@ const TransactionAddForm = () => {
             <button
               type="button"
               className="btn btn-warning mt-2"
-              onClick={() => {
-                setName('');
-                setWording('');
-                setBalance('');
-                setCategory(0);
-                setSubcategory();
-                setKmTravelled('');
-                setPriceLiter('');
-                setTank('');
-                setVehicle();
-                setFuel();
-              }}
+              onClick={() => resetForm()}
             >
               Reset
             </button>

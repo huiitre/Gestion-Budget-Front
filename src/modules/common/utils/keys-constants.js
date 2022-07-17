@@ -22,6 +22,8 @@ export const subcategoriesQueryKeys = {
 export const vehiclesQueryKeys = {
   base: ['vehicles'],
   list: () => [...vehiclesQueryKeys.base, 'list'],
+  create: () => [...vehiclesQueryKeys.base, 'create'],
+  delete: () => [...vehiclesQueryKeys.base, 'delete'],
 };
 
 export const fuelQueryKeys = {

@@ -5,7 +5,8 @@ import {
   destroySession,
   setLoginFormErrMessage,
 } from '../../../store/actions/user';
-import AddVehicle from '../../common/components/form/addVehicle';
+import AddVehicleForm from '../../Vehicule/components/addVehicleForm';
+import AddFuelForm from '../../Fuel/components/addFuelForm';
 
 const Navigation = () => {
   const dispatch = useDispatch();
@@ -24,9 +25,29 @@ const Navigation = () => {
     setIsOpenAddVehicle(false);
   };
 
+  const handleOpenAddFuel = () => {
+    setIsOpenAddFuel(true);
+  };
+
+  const handleCloseAddFuel = () => {
+    setIsOpenAddFuel(false);
+  };
+
+  const addVehicleProps = {
+    isOpen: isOpenAddVehicle,
+    close: handleCloseAddVehicle,
+  };
+
+  const addFuelProps = {
+    isOpen: isOpenAddFuel,
+    close: handleCloseAddFuel,
+  };
+
   return (
     <>
-      <AddVehicle isOpen={isOpenAddVehicle} close={handleCloseAddVehicle} />
+      <AddVehicleForm {...addVehicleProps} />
+      <AddFuelForm {...addFuelProps} />
+      {/* <AddFuel isOpen={isOpenAddVehicle} close={handleCloseAddVehicle} /> */}
       {isLogged && (
         <nav className="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
           <div className="container-fluid">
@@ -117,7 +138,7 @@ const Navigation = () => {
                               className="dropdown-item nav-link"
                               onClick={(e) => {
                                 e.preventDefault();
-                                handleOpenAddVehicle(true);
+                                handleOpenAddFuel(true);
                               }}
                             >
                               Ajouter / supprimer un carburant
