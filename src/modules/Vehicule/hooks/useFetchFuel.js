@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { fuelQueryKeys } from '../utils/keys-constants';
+import { fuelQueryKeys } from '../../common/utils/keys-constants';
 
 const useFetchFuel = (key) => useQuery(fuelQueryKeys[key](), async () => {
   const token = localStorage.getItem('TOKEN');

@@ -16,6 +16,7 @@ import Transactions from './modules/Transactions/components/transactions';
 import { destroySession, loadUser } from './store/actions/user';
 import Spinner from './modules/common/components/spinner';
 import TransactionAddPage from './pages/transactionAddPage';
+import ConsoFuelHomePage from './pages/ConsoFuelHomePage';
 
 const Routes = () => {
   const dispatch = useDispatch();
@@ -31,7 +32,6 @@ const Routes = () => {
     else {
       dispatch(destroySession());
     }
-    console.log(location);
   }, []);
 
   //? possible de mettre ça dans le premier useEffect
@@ -48,9 +48,9 @@ const Routes = () => {
           {isLogged && (
             <>
               <Route path="/" element={<Home />} />
-              ,
               <Route path="transactions" element={<Transactions />} />
               <Route path="transaction/add" element={<TransactionAddPage />} />
+              <Route path="vehicule" element={<ConsoFuelHomePage />} />
             </>
           )}
           {!isLogged && (
