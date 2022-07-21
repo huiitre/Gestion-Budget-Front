@@ -29,4 +29,6 @@ export const vehiclesQueryKeys = {
 export const fuelQueryKeys = {
   base: ['fuel'],
   list: () => [...fuelQueryKeys.base, 'list'],
+  create: () => [...fuelQueryKeys.base, 'create'],
+  delete: () => [...fuelQueryKeys.base, 'delete'],
 };
