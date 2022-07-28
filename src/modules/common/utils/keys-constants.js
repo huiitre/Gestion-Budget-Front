@@ -32,3 +32,8 @@ export const fuelQueryKeys = {
   create: () => [...fuelQueryKeys.base, 'create'],
   delete: () => [...fuelQueryKeys.base, 'delete'],
 };
+
+export const todolistQueryKeys = {
+  base: ['todolist'],
+  list: () => [...todolistQueryKeys.base, 'list'],
+};

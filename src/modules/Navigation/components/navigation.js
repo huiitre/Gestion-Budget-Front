@@ -149,6 +149,11 @@ const Navigation = () => {
                     </ul>
                   </div>
                 </li>
+                <li className="nav-item">
+                  <NavLink to="/todolist" className="nav-link">
+                    Todolist
+                  </NavLink>
+                </li>
               </ul>
             </div>
           </div>

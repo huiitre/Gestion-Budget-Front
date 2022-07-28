@@ -17,6 +17,7 @@ import { destroySession, loadUser } from './store/actions/user';
 import Spinner from './modules/common/components/spinner';
 import TransactionAddPage from './pages/transactionAddPage';
 import ConsoFuelHomePage from './pages/ConsoFuelHomePage';
+import TodolistPage from './pages/TodolistPage';
 
 const Routes = () => {
   const dispatch = useDispatch();
@@ -51,6 +52,7 @@ const Routes = () => {
               <Route path="transactions" element={<Transactions />} />
               <Route path="transaction/add" element={<TransactionAddPage />} />
               <Route path="vehicule" element={<ConsoFuelHomePage />} />
+              <Route path="todolist" element={<TodolistPage />} />
             </>
           )}
           {!isLogged && (
