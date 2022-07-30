@@ -18,6 +18,7 @@ import Spinner from './modules/common/components/spinner';
 import TransactionAddPage from './pages/transactionAddPage';
 import ConsoFuelHomePage from './pages/ConsoFuelHomePage';
 import TodolistPage from './pages/TodolistPage';
+import TodosPage from './pages/TodosPage';
 
 const Routes = () => {
   const dispatch = useDispatch();
@@ -35,7 +36,6 @@ const Routes = () => {
     }
   }, []);
 
-  //? possible de mettre ça dans le premier useEffect
   useEffect(() => {
     const loc = location.pathname === '/login' ? '/' : location.pathname;
     navigate(loc);
@@ -53,6 +53,7 @@ const Routes = () => {
               <Route path="transaction/add" element={<TransactionAddPage />} />
               <Route path="vehicule" element={<ConsoFuelHomePage />} />
               <Route path="todolist" element={<TodolistPage />} />
+              <Route path="todolist/:id" element={<TodosPage />} />
             </>
           )}
           {!isLogged && (

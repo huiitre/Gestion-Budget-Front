@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 
-const Popup = ({ message, statusCode }) => {
+const PopupArray = ({ message, statusCode }) => {
   const style = {
     position: 'absolute',
     top: '50%',
@@ -30,7 +30,7 @@ const Popup = ({ message, statusCode }) => {
       >
         <Box sx={style}>
           <Typography style={{ color: statusCode == 1 ? '#008000' : 'red' }} id="modal-modal-title" variant="h6" component="h2">
-            {message}
+            {message.map((item) => <p>{item}</p>)}
           </Typography>
         </Box>
       </Modal>
@@ -38,4 +38,4 @@ const Popup = ({ message, statusCode }) => {
   );
 };
 
-export default Popup;
+export default PopupArray;

@@ -36,4 +36,8 @@ export const fuelQueryKeys = {
 export const todolistQueryKeys = {
   base: ['todolist'],
   list: () => [...todolistQueryKeys.base, 'list'],
+  todos: () => [...todolistQueryKeys.base, 'todos'],
+  create: () => [...todolistQueryKeys.base, 'create'],
+  delete: () => [...todolistQueryKeys.base, 'delete'],
+  patch: () => [...todolistQueryKeys.base, 'patch'],
 };

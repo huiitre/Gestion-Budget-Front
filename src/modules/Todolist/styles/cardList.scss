@@ -1,0 +1,14 @@
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  border: none;
+
+  & .button.is-small {
+    margin: 0.5rem;
+  }
+
+  & .card-title {
+    line-height: 2.4rem;
+    font-weight: bold;
+  }
+}
