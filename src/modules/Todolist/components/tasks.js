@@ -8,7 +8,7 @@ import TodolistAddForm from './todolistAddForm';
 const Tasks = () => {
   const { id } = useParams();
 
-  const { data, isLoading } = useFetchTodos('todos', id);
+  const { data, isLoading } = useFetchTodos('list', id);
 
   return (
     <>

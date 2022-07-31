@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { todolistQueryKeys } from '../../common/utils/keys-constants';
+import { todoQueryKeys } from '../../common/utils/keys-constants';
 
 const useFetchTodos = (key, id) => useQuery(
-  todolistQueryKeys[key](),
+  todoQueryKeys[key](),
   async () => {
     const token = localStorage.getItem('TOKEN');
     const axiosInstance = axios.create({

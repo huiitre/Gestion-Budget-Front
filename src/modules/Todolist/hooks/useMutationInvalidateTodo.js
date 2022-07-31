@@ -1,13 +1,13 @@
 import axios from 'axios';
 import { useMutation, useQueryClient } from 'react-query';
-import { todolistQueryKeys } from '../../common/utils/keys-constants';
+import { todoQueryKeys } from '../../common/utils/keys-constants';
 
 const useMutationInvalidateTodo = ({
   id, name, onSettled,
 }) => {
   const queryClient = useQueryClient();
   return useMutation(
-    todolistQueryKeys.patch(),
+    todoQueryKeys.patch(),
     async () => {
       const data = { id, name, percent: 0 };
       const token = localStorage.getItem('TOKEN');

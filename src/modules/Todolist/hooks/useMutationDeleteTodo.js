@@ -1,12 +1,12 @@
 /* eslint-disable spaced-comment */
 import axios from 'axios';
 import { useMutation, useQueryClient } from 'react-query';
-import { todolistQueryKeys } from '../../common/utils/keys-constants';
+import { todoQueryKeys } from '../../common/utils/keys-constants';
 
 const useMutationDeleteTodo = ({ ids, list, onSettled }) => {
   const queryClient = useQueryClient();
   return useMutation(
-    todolistQueryKeys.delete(),
+    todoQueryKeys.delete(),
     async () => {
       const data = { ids, list };
       const token = localStorage.getItem('TOKEN');
