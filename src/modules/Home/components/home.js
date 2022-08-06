@@ -2,7 +2,7 @@
 // == Import
 import { useCallback } from 'react';
 import useFetchTransactions from '../../Transactions/hooks/useFetchTransactions';
-import getMonthNameFromDate from '../../common/utils/getMonthNameFromDate';
+import { getMonthNameFromDate } from '../../common/utils/getMonthNameFromDate';
 import getYearIntegetFromDate from '../../common/utils/getYearIntegerFromDate';
 import Spinner from '../../common/components/spinner';
 import TransactionShortItem from '../../Transactions/components/transactionShortItem';

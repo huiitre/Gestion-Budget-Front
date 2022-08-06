@@ -2,7 +2,7 @@ import { useInfiniteQuery } from 'react-query';
 import axios from 'axios';
 import { transactionsQueryKeys } from '../../common/utils/keys-constants';
 
-const useFetchTransactions = (key) => useInfiniteQuery(
+const useFetchTransactions = (key, { month, year }) => useInfiniteQuery(
   transactionsQueryKeys[key](),
   async ({ pageParam, hasNextPage }) => {
     const token = localStorage.getItem('TOKEN');
@@ -10,7 +10,7 @@ const useFetchTransactions = (key) => useInfiniteQuery(
       baseURL: `${process.env.REACT_APP_API_URL}`,
     });
     axiosInstance.defaults.headers.common.authorization = `Bearer ${token}`;
-    const response = await axiosInstance.get('/transaction/list');
+    const response = await axiosInstance.get('/transaction/list', { params: { month, year } });
 
     return response.data;
   },
