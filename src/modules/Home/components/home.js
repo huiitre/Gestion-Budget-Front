@@ -10,11 +10,11 @@ import TransactionShortItem from '../../Transactions/components/transactionShort
 // == Composant
 const Home = () => {
   const currentMonth = getMonthNameFromDate();
-  const currentYear = getYearIntegetFromDate();
+  const year = getYearIntegetFromDate();
 
   const {
     data, isLoading, fetchNextPage, hasNextPage,
-  } = useFetchTransactions('limit');
+  } = useFetchTransactions('list', { month: new Date().getMonth(), year });
 
   const handleFetchNextPage = useCallback(
     (e) => {
@@ -37,10 +37,10 @@ const Home = () => {
                 <div className="card text-white mb-3">
                   <div className="card-header d-flex justify-content-between bg-primary">
                     <span>
-                      Solde du mois de {currentMonth} {currentYear}
+                      Solde du mois de {currentMonth} {year}
                     </span>
                     <span>
-                      {!isLoading && data.pages[0].total.total_balance}
+                      {/* {!isLoading && data.pages[0].total.total_balance} */}
                     </span>
                   </div>
                   <div className="card-body">
@@ -55,9 +55,9 @@ const Home = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {/* {data.pages[0].data.map((item) => (
+                        {data.pages[0].data.map((item) => (
                           <TransactionShortItem {...item} key={item.t_id} />
-                        ))} */}
+                        ))}
                         {data.pages.map((group, i) => group.data.map((item) => (
                           <TransactionShortItem {...item} key={item.t_id} />
                         )))}

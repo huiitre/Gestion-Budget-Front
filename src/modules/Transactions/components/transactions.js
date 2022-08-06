@@ -24,8 +24,6 @@ const Transactions = () => {
   const fetch = useFetchTransactions('list', { month, year });
   const [transactionsList, setTransactionsList] = useState([]);
 
-  console.log(!fetch.isLoading && fetch.data.pages[0].total.total_balance);
-
   const mutation = useMutationDeleteTransaction(transactionsList);
   const handleDelete = () => {
     mutation.mutate();
